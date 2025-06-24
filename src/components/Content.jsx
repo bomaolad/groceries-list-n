@@ -1,6 +1,5 @@
 import React from "react";
 import "./index.css";
-import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
 const Content = ({ items, setItems, handleCheck, handleDelete }) => {
@@ -24,7 +23,14 @@ const Content = ({ items, setItems, handleCheck, handleDelete }) => {
               <FaTrashAlt
                 role="button"
                 tabIndex={0}
+                aria-label="Delete item"
+                title="Delete item"
                 onClick={() => handleDelete(item.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    handleDelete(item.id);
+                  }
+                }}
               />
             </li>
           ))}

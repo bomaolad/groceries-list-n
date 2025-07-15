@@ -10,6 +10,8 @@ html {
 
 body {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -20,7 +22,7 @@ body {
 .App {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center;  <-- DELETE THIS LINE */
   align-items: center;
   height: 100vh;
   width: 100%;
@@ -57,7 +59,10 @@ footer {
   display: grid;
   place-content: center;
   margin-top: auto;
-  position: static;
+}
+
+.footer-text {
+  margin-bottom: 0px;
 }
 
 ul {

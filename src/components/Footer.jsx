@@ -4,7 +4,7 @@ import "./index.css";
 const Footer = ({ length }) => {
   return (
     <footer>
-      <p>
+      <p class="footer-text">
         {length} List {length === 1 ? "Item" : "Items"}
       </p>
     </footer>

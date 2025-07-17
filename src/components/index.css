@@ -22,7 +22,6 @@ body {
 .App {
   display: flex;
   flex-direction: column;
-  /* justify-content: center;  <-- DELETE THIS LINE */
   align-items: center;
   height: 100vh;
   width: 100%;

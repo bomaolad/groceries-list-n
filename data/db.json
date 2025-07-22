@@ -3,22 +3,22 @@
     {
       "id": 1,
       "checked": false,
-      "item": "Apples"
+      "item": "Almonds, Unsalted, in the blue bag"
     },
     {
       "id": 2,
-      "checked": true,
-      "item": "Bananas"
+      "checked": false,
+      "item": "Pizza"
     },
     {
       "id": 3,
       "checked": false,
-      "item": "Oranges"
+      "item": "Bread"
     },
     {
       "id": 4,
-      "checked": true,
-      "item": "Mangoes"
+      "checked": false,
+      "item": "Cookies"
     }
   ]
 }

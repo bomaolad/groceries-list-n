@@ -4,6 +4,7 @@ import Content from "./components/Content";
 import Footer from "./components/Footer";
 import AddItem from "./components/AddItem";
 import SearchItem from "./components/SearchItem";
+import apiRequest from "./apiRequest";
 
 function App() {
   const API_URL = "http://localhost:3500/items"; // URL to fetch items from the local JSON server
@@ -30,29 +31,82 @@ function App() {
       }
     };
 
+    // const fetchItems = () => {
+    //   fetch(API_URL)
+    //     .then((response) => response.json())
+    //     .then((listItems) => {
+    //       setItems(listItems);
+    //       setFetchError(null);
+    //       console.log(listItems);
+    //       console.log("Working");
+    //       setIsLoading(false);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err.stack);
+    //     });
+    // };
+
     setTimeout(() => {
       (async () => await fetchItems())();
     }, 3000); // Simulate a delay of 3 seconds before fetching data
   }, []);
 
-  const addItem = (item) => {
-    const id = items.length ? items[items.length - 1].id + 1 : 1;
+  const addItem = async (item) => {
+    const itemId = items.length
+      ? Math.max(...items.map((item) => Number(item.id)))
+      : 0;
+    const id = itemId + 1;
     const myNewItem = { id, checked: false, item };
     const listItems = [...items, myNewItem];
     setItems(listItems);
     // console.log(listItems);
+
+    const postOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(myNewItem),
+    };
+
+    const result = await apiRequest(API_URL, postOptions);
+    if (result) setFetchError(result);
   };
 
-  const handleCheck = (id) => {
+  const handleCheck = async (id) => {
     const listItems = items.map((item) =>
       item.id === id ? { ...item, checked: !item.checked } : item
     );
     setItems(listItems);
+
+    const myItem = listItems.filter((item) => item.id === id);
+    const updateOptions = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ checked: myItem[0].checked }),
+    };
+
+    const reqUrl = `${API_URL}/${id}`;
+
+    const result = await apiRequest(reqUrl, updateOptions);
+    if (result) setFetchError(result);
   };
 
-  const handleDelete = (id) => {
-    const listItems = items.filter((item) => item.id !== id);
-    setItems(listItems);
+  const handleDelete = async (id) => {
+    const deleteOptions = { method: "DELETE" };
+    const reqUrl = `${API_URL}/${id}`;
+    const result = await apiRequest(reqUrl, deleteOptions);
+
+    if (!result) {
+      // If no error, update UI
+      const listItems = items.filter((item) => item.id !== id);
+      setItems(listItems);
+    } else {
+      // If there was an error, show it
+      setFetchError(result);
+    }
   };
 
   const handleSubmit = (e) => {

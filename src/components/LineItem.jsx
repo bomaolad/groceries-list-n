@@ -18,15 +18,8 @@ const LineItem = ({ item, handleCheck, handleDelete }) => {
         </label>
         <FaTrashAlt
           role="button"
-          tabIndex={0}
-          aria-label="Delete item"
-          title="Delete item"
+          tabIndex="0"
           onClick={() => handleDelete(item.id)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              handleDelete(item.id);
-            }
-          }}
         />
       </li>
     </>
